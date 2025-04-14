@@ -1,4 +1,6 @@
 ![6  Polar Chart](https://github.com/user-attachments/assets/067b2585-a55e-423d-8b09-936de16e4404)
+![8  py Gantt Chart Dark](https://github.com/user-attachments/assets/bec32aca-4807-477b-a697-2ab6f7b4f15c)
+![8  py Gantt Chart Light](https://github.com/user-attachments/assets/5150eb0f-fffa-4582-8150-28f4bdc79994)
 ![1  New Clustered Chart with Total](https://github.com/user-attachments/assets/28edca5e-05be-46e9-b209-4ab66a39a415)
 ![2  py Card Visual](https://github.com/user-attachments/assets/2f43c0c6-d40c-4cc6-876e-222a28139a3e)
 ![3  py Card Visual with Goal](https://github.com/user-attachments/assets/f1419218-7ac6-4149-b14d-31e2b623ff47)
