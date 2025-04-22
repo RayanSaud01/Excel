@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt,pandas as pd,numpy as np
-D= https://raw.githubusercontent.com/rayansaud01/Excel/main/dashboard.py
+D= https://raw.githubusercontent.com/rayansaud01/Excel/main/13. KPIs v2.xlsx
 D['M']=D.Month.map({'Jan':1,'Feb':2,'Mar':3,'Apr':4,'May':5,'Jun':6,'Jul':7,'Aug':8,'Sep':9,'Oct':10,'Nov':11,'Dec':12})
 d=D.groupby(['Year','M']).Sales.sum().unstack(fill_value=0)
 Y=list(d.index);ly,py=Y[-1],Y[-2]
