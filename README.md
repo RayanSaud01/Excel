@@ -1,4 +1,5 @@
 ![7  py Heatmap](https://github.com/user-attachments/assets/8ead018d-9f64-4508-909c-046cfd5e94d2)
+![13  KPI v2](https://github.com/user-attachments/assets/4f66b7f7-be70-4dff-889b-571d4e0761f7)
 ![9  Dumbell Plot](https://github.com/user-attachments/assets/350886bc-88db-407e-9479-5c62aef0e98b)
 ![10  Slope Chart - white](https://github.com/user-attachments/assets/bb600acf-d7a3-4c2a-9667-f5ba5b4323a2)
 ![6  Polar Chart](https://github.com/user-attachments/assets/067b2585-a55e-423d-8b09-936de16e4404)
