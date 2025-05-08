@@ -1,3 +1,4 @@
+![22  Waffle Chart](https://github.com/user-attachments/assets/63b5b0c7-c6ad-4706-8cd4-abe5a49a5183)
 ![7  py Heatmap](https://github.com/user-attachments/assets/8ead018d-9f64-4508-909c-046cfd5e94d2)
 ![13  KPI v2](https://github.com/user-attachments/assets/4f66b7f7-be70-4dff-889b-571d4e0761f7)
 ![9  Dumbell Plot](https://github.com/user-attachments/assets/350886bc-88db-407e-9479-5c62aef0e98b)
