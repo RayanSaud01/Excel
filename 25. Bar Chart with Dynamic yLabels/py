@@ -1,148 +1,67 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# --- Fictional Dataset ---
-# Product names and their year-over-year change (%)
 products = [
-    "Quantum Blaster 2.0",
-    "Eco-Friendly Spatula",
-    "Hyper-Speed Drone",
-    "Vintage Toaster 9000",
-    "Smart Pet Feeder",
-    "Ergonomic Keyboard Pro",
-    "Solar-Powered Charger",
-    "Noise-Cancelling Earbuds",
-    "DIY Robotics Kit",
+    "Quantum Blaster 2.0", "Eco-Friendly Spatula", "Hyper-Speed Drone",
+    "Vintage Toaster 9000", "Smart Pet Feeder", "Ergonomic Keyboard Pro",
+    "Solar-Powered Charger", "Noise-Cancelling Earbuds", "DIY Robotics Kit",
     "Biodegradable Toothbrush"
 ]
 
-# Fictional percentage changes (some positive, some negative)
-# These represent increase/decrease from the previous year
-changes = [
-    18.5,   # Quantum Blaster 2.0 (Increase)
-    -7.2,   # Eco-Friendly Spatula (Decrease)
-    32.1,   # Hyper-Speed Drone (Increase)
-    -15.8,  # Vintage Toaster 9000 (Decrease)
-    10.3,   # Smart Pet Feeder (Increase)
-    -4.1,   # Ergonomic Keyboard Pro (Decrease)
-    25.0,   # Solar-Powered Charger (Increase)
-    -9.5,   # Noise-Cancelling Earbuds (Decrease)
-    12.7,   # DIY Robotics Kit (Increase)
-    -6.0    # Biodegradable Toothbrush (Decrease)
-]
+changes = [18.5, -7.2, 32.1, -15.8, 10.3, -4.1, 25.0, -9.5, 12.7, -6.0]
 
-# Sort data by change for better visualization
-# Combine products and changes into a list of tuples, then sort by change
 sorted_data = sorted(zip(changes, products), key=lambda x: x[0])
 sorted_changes = [item[0] for item in sorted_data]
 sorted_products = [item[1] for item in sorted_data]
 
-# --- Create the Plot ---
-fig, ax = plt.subplots(figsize=(14, 8)) # Set figure size for better readability
+fig, ax = plt.subplots(figsize=(14, 8))
+fig.patch.set_facecolor('#282C34')
+ax.set_facecolor('#282C34')
+text_color = 'lightgray'
 
-# --- Dark Theme Settings ---
-fig.patch.set_facecolor('#282C34') # Dark background for the figure
-ax.set_facecolor('#282C34')        # Dark background for the plot area
-text_color = 'lightgray'           # Light color for text elements
-
-# Define y-positions for the horizontal bars
 y_positions = np.arange(len(sorted_products))
+bar_colors = ["#4E0CE9" if c > 0 else "#FD5507" for c in sorted_changes]
+bars = ax.barh(y_positions, sorted_changes, color=bar_colors, height=0.6)
 
-# Create horizontal bars
-# Use different colors for positive and negative changes, as specified in the prompt
-bar_colors = ["#0C1BE9" if c > 0 else "#FD4007" for c in sorted_changes]
-# Reduced bar height by half (from 0.6 to 0.3)
-bars = ax.barh(y_positions, sorted_changes, color=bar_colors, height=0.3)
-
-# --- Remove Y-axis domain and labels ---
-ax.set_yticks([]) # Remove y-axis ticks
-ax.set_ylabel('') # Remove y-axis label (which previously held product names)
-
-# --- Apply the "Twist": Conditional Label Placement for Percentage and Category Labels ---
-# Define a vertical offset for CATEGORY text labels relative to the bar's center
-# Positive value moves labels up, negative moves them down
-category_label_vertical_offset = 0.4 # Adjust as needed for category labels only
+ax.set_yticks([])
+ax.set_ylabel('')
 
 for i, rect in enumerate(bars):
     change = sorted_changes[i]
     product = sorted_products[i]
-
-    # Calculate base y-position for the center of the bar
+    width = rect.get_width()
     y_center = rect.get_y() + rect.get_height() / 2
-
-    # Percentage label placement:
-    # For positive values: place label slightly to the left of the bar's end
-    # For negative values: place label slightly to the right of the bar's end
-    percent_label_offset = 0.0 # Adjust for desired spacing from bar end
-    x_pos_percent = rect.get_width() - percent_label_offset if rect.get_width() >= 0 else rect.get_width() + percent_label_offset
-    ha_percent_align = 'right' if rect.get_width() >= 0 else 'left'
-
-    # Add the percentage text label (NOT affected by vertical offset)
-    ax.text(x_pos_percent, y_center, f'{change:.1f}%', # Use y_center directly
-            ha=ha_percent_align,
-            va='center',
-            color=text_color, # Use light text color for dark theme
-            fontsize=9,
-            fontweight='bold') # Make percentage label bold for emphasis
-
-    # Category label placement (product name):
-    # Place product name near the x=0 axis, aligned to appear "above" the bar.
-    # Reverting to a positive offset to maintain original "twist" placement
-    category_label_x_offset_from_zero = -0.5 # Adjust this value for desired spacing from x=0
-
-    # Apply the vertical offset to the y_center for category label placement
-    y_pos_category_label = y_center + category_label_vertical_offset
-
+    percent_label_offset = 0.5
+    x_pos_percent = width - percent_label_offset if width >= 0 else width + percent_label_offset
+    ha_percent_align = 'right' if width >= 0 else 'left'
+    ax.text(x_pos_percent, y_center, f'{change:.1f}%', ha=ha_percent_align, va='center', color=text_color, fontsize=9, fontweight='bold')
+    category_label_x_offset_from_zero = 1.0
     if change >= 0:
-        # For positive values: place label slightly to the left of x=0
         x_pos_category = -category_label_x_offset_from_zero
-        ha_category_align = 'left' # Align right so text ends at x_pos_category (extends left)
+        ha_category_align = 'right'
     else:
-        # For negative values: place label slightly to the right of x=0
         x_pos_category = category_label_x_offset_from_zero
-        ha_category_align = 'right' # Align left so text starts at x_pos_category (extends right)
+        ha_category_align = 'left'
+    ax.text(x_pos_category, y_center, product, ha=ha_category_align, va='center', color=text_color, fontsize=10, wrap=True, bbox=dict(boxstyle="round,pad=0.3", fc="#3A3F47", ec="none", alpha=0.8))
 
-    # Add the product name text label
-    ax.text(x_pos_category, y_pos_category_label, product, # Use y_pos_category_label here
-            ha=ha_category_align,
-            va='center',
-            color=text_color, # Use light text color for dark theme
-            fontsize=10,
-            wrap=True, # Allow text to wrap if product name is long
-            bbox=dict(boxstyle="round,pad=0.3", fc="#3A3F47", ec="none", alpha=0.8)) # Darker background for labels
-
-
-# --- Customize the Chart ---
 ax.set_xlabel('Year-over-Year Change (%)', fontsize=12, labelpad=10, color=text_color)
-ax.set_title('Product Performance: Year-over-Year Change\n(Year-over-Year Comparison)',
-             fontsize=18, pad=20, color=text_color, fontweight='bold') # Increased font size and added fontweight
+ax.set_title('Product Performance: Year-over-Year Change\n(Year-over-Year Comparison)', fontsize=18, pad=20, color=text_color, fontweight='bold')
+ax.axvline(0, color='lightgray', linestyle='--', linewidth=0.8)
 
-# Add a vertical line at x=0 to clearly separate positive and negative values
-ax.axvline(0, color='lightgray', linestyle='--', linewidth=0.8) # Lighter line for dark theme
-
-# Adjust x-axis limits to provide some padding for labels and make it symmetric
 min_val = min(sorted_changes)
 max_val = max(sorted_changes)
 max_abs_val = max(abs(min_val), abs(max_val))
-padding = 5 # Additional padding for the limits
+padding = 5
 ax.set_xlim(-(max_abs_val + padding), (max_abs_val + padding))
 
-# Set x-axis tick parameters for dark theme
 ax.tick_params(axis='x', colors=text_color)
-
-# Remove the top and right spines for a cleaner look
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
-ax.spines['left'].set_visible(False) # Removed the left y-axis line/domain
+ax.spines['left'].set_visible(False)
 ax.spines['bottom'].set_linewidth(0.5)
-ax.spines['bottom'].set_color(text_color) # Set spine color for dark theme
+ax.spines['bottom'].set_color(text_color)
+ax.xaxis.grid(True, linestyle='--', alpha=0.5, color='gray')
+ax.yaxis.grid(False)
 
-# Add grid lines for better readability on the change axis
-ax.xaxis.grid(True, linestyle='--', alpha=0.5, color='gray') # Muted grid lines for dark theme
-ax.yaxis.grid(False) # No horizontal grid lines needed for bar chart
-
-# Ensure layout is tight to prevent labels from being cut off
 plt.tight_layout()
-
-# Display the plot
 plt.show()
